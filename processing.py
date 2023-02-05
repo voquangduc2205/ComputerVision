@@ -223,7 +223,7 @@ def closing_morphological(img):
 
 def erosion(img):
    
-   kernel = np.ones((5, 5), np.uint8)
+   kernel = np.ones((3, 3), np.uint8)
 
    invert = cv2.bitwise_not(img)
 
@@ -233,6 +233,10 @@ def erosion(img):
 
 
 def find_contours(img):
+   
+   imgray = cv2.cvtColor(img, cv.COLOR_BGR2GRAY)
+   ret, thresh = cv2.threshold(imgray, 50, 100, 0)
+   contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
    
    cv2.imshow('Input', img)
 
@@ -264,8 +268,8 @@ img = adaptive_threshold(img)
 cv2.imwrite("After adaptive threshold.png", img=img)
 
 
-img = closing_morphological(img)
-cv2.imwrite("After closing morphological.png", img=img)
+# img = closing_morphological(img)
+# cv2.imwrite("After closing morphological.png", img=img)
 
 img = erosion(img)
 cv2.imwrite("After erosion.png", img=img)
